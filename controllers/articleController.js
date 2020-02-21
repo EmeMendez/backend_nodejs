@@ -188,6 +188,48 @@ var Articlecontroller = {
         });
 
     },
+    upload: (req,res) =>{
+        //configurar el modulo del connect multiparty router/article.js
+        var file_path = 'imagen no subida....';
+        console.log(req.files);
+        //recoger el fichero de la petición
+        if(!req.files){
+            return res.status(404).send({
+                status: 'error',
+                messagge : file_name
+            });
+        }
+        //conseguir el nombre y la extensión del archivo
+        var file_path = req.files.file0.path;
+        var file_split = file_path.split('\\');
+        
+        //get file name
+        var file_name = file_split[2];
+        //extension
+        var extension_split = file_name.split('\.');
+        var file_ext = extension_split[1];
+        //comprobar la extensión, solo imagenes, si no es valido borrar el fichero
+        if(file_ext != 'png' && file_ext != 'jpg' && file_ext != 'jpeg' && file_ext != 'gif')
+        {
+            //borrar el archivo subido
+        }else{
+            
+        }
+
+//si todo es valido
+        //buscar el articulo, asignarle el nombre de la imagen
+
+
+
+
+
+        return res.status(404).send({
+            // fichero: req.files
+            fichero: file_split,
+            split : file_split,
+            extension: file_ext
+        });         
+    }
 }; //end ArticleController
 
 module.exports= Articlecontroller;
