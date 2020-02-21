@@ -67,19 +67,19 @@ var Articlecontroller = {
                     status : 'error',
                     message: 'error al devolver articulos !!!'
                 });
-            }
+            }//end if
 
             if(!articles){
                 return res.status(404).send({
                     status : 'error',
                     message: 'No hay articulos para mostrar !!!'
                 });
-            }
+            }//end if
         
             return res.status(200).send({
                 status: 'success',
                 articles
-            });
+            });//end return 200
 
         });
     },
@@ -102,18 +102,63 @@ var Articlecontroller = {
                 });                
             }
 
-
+        //byscar el article
             return res.status(200).send({
                 status : 'success',
                 article
             });           
         });
+    },
+    update: (req,res) =>{
+        //get article id but the url
+        var article_id = req.params.id;
+        //get data by put
+        var params = req.body;
+        //validate data
+        try{
+            var validate_title = !validar.isEmpty(params.title);
+            var validate_content = !validar.isEmpty(params.content);
+            
+        }catch(err){
+            return res.status(200).send({
+                status: 'error',
+                message: 'faltan datos por enviar update'
+            });
+        }
+        if(validate_title && validate_content){
+                    //find and update
+            Article.findByIdAndUpdate({_id: article_id}, params,{new:true}, (err,articleUpdate)=>{
+                if(err){
+                    return res.status(500).send({
+                        status: 'error',
+                        message: 'error al actualizar'
+                    });                    
+                 } 
+                 if(!articleUpdate){
+                    return res.status(404).send({
+                        status: 'error',
+                        message: 'No existe el artículo'
+                    });                      
+                 }
 
-        //byscar el article
+                 return res.status(200).send({
+                     status: 'success',
+                     articleUpdate
+                 });
+                 
+                
+                });
+            
+        }else{
+            return res.status(404).send({
+                status: 'error',
+                article : 'se ha producido un error'
+            });
+        }
 
-
+       
     }
-}; //end controller
+}; //end ArticleController
 
 module.exports= Articlecontroller;
 

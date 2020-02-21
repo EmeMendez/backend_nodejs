@@ -13,4 +13,5 @@ router.get('/test-de-controlador-get',articleController.test);
 router.post('/save-article',articleController.save);
 router.get('/articles/:last?', articleController.getArticles);
 router.get('/article/:id',articleController.getArticle);
+router.put('/article/:id',articleController.update);
 module.exports = router;
