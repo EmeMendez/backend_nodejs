@@ -82,6 +82,36 @@ var Articlecontroller = {
             });
 
         });
+    },
+    getArticle: (req,res) =>{
+        //recoger el id de la url
+        var article_id = req.params.id;
+        if(!article_id || article_id == null){
+            return res.status(404).send({
+                status:'error',
+                message: 'no existe el article'
+            });
+        }
+
+        //comprobar que existe
+        Article.findById(article_id,(err,article)=>{
+            if(err || !article){
+                return res.status(404).send({
+                    status : 'error',
+                    message: 'no existe el articulo!!!'
+                });                
+            }
+
+
+            return res.status(200).send({
+                status : 'success',
+                article
+            });           
+        });
+
+        //byscar el article
+
+
     }
 }; //end controller
 
