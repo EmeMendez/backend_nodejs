@@ -157,7 +157,37 @@ var Articlecontroller = {
         }
 
        
-    }
+    },
+    delete : (req,res) => {
+        //get the id by url
+        var  article_id = req.params.id;
+        //find and delete
+        Article.findByIdAndDelete({_id: article_id},(err,articleRemoved) =>{
+            if(!articleRemoved){
+                return res.status(404).send({
+                    status: 'error',
+                    message: 'no se ha borrado el article pór que tal vez no existe'
+                });
+            }
+            if(err){
+               return res.status(500).send({
+                   status: 'error',
+                   message: 'error al borrar'
+               });
+           } 
+               
+           
+
+           return res.status(200).send({
+                status: 'success',
+                article: articleRemoved,
+                message: 'article was removed successfully'
+            });          
+
+
+        });
+
+    },
 }; //end ArticleController
 
 module.exports= Articlecontroller;
